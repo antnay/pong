@@ -1,11 +1,11 @@
 #include "window.h"
-#include "/opt/homebrew/opt/sdl2/include/SDL2/SDL.h"
+#include "lib.h"
 #include <cstddef>
 #include <cstdlib>
 #include <iostream>
 #include <unistd.h>
 
-void initSDL(SDL_Window *&window, SDL_Surface *surface) {
+void initSDL(SDL_Window *&window, SDL_Surface *&surface) {
   if (SDL_Init(SDL_INIT_VIDEO) < 0) {
     std::cout << "SDL could not initialize! SDL_Error: " << SDL_GetError()
               << std::endl;
@@ -30,7 +30,6 @@ void initSDL(SDL_Window *&window, SDL_Surface *surface) {
   surface = SDL_GetWindowSurface(window);
   SDL_FillRect(surface, NULL, SDL_MapRGB(surface->format, 0xFF, 0xFF, 0xFF));
   SDL_UpdateWindowSurface(window);
-
 }
 
 void initWindow(SDL_Window *&window, int width, int height) {
@@ -47,4 +46,11 @@ void initWindow(SDL_Window *&window, int width, int height) {
 void cleanSDL(SDL_Window *window) {
   SDL_DestroyWindow(window);
   SDL_Quit();
+}
+
+Point<double> getCenter(int w, int h) {
+  Point<double> point;
+  point.x = w / 2;
+  point.y = h / 2;
+  return point;
 }
