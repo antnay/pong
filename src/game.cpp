@@ -1,15 +1,20 @@
 #include "game.hpp"
 
+#include "lib.hpp"
 #include "pong.hpp"
+#include <SDL_rect.h>
+#include <SDL_render.h>
 
 #define UP_ONE SDL_SCANCODE_W
 #define DOWN_ONE SDL_SCANCODE_S
 #define UP_TWO SDL_SCANCODE_I
 #define DOWN_TWO SDL_SCANCODE_K
 #define MAXANGLE (5 * M_PI / 12) // 75 degree
+#define BALLVEL 5
 
-double halfRect = RECTHEIGHT / 2;
+double halfRect = PADDLEHEIGHT / 2;
 double halfBall = BALLHEIGHT / 2;
+double maxAngle = 5 * M_PI / 12;
 
 bool getKey(SDL_Event &e, bool quit, Ball *&ball) {
   while (SDL_PollEvent(&e)) {
@@ -26,30 +31,51 @@ bool getKey(SDL_Event &e, bool quit, Ball *&ball) {
   return quit;
 }
 
+void score (Ball *ball, Player *playerOne, Player *playerTwo) {
+  if (ball->getPos().x <= 0) {
+    playerTwo->incrPoint();
+    ball->reset();
+  }
+  if (ball->getPos().x >= DIM_X) {
+    playerOne->incrPoint();
+    ball->reset();
+  }
+}
+
 void movePlayerOne(Player *&player) {
   const Uint8 *currentKeyStates = SDL_GetKeyboardState(NULL);
-  if (currentKeyStates[UP_ONE])
-    player->posUp();
-  if (currentKeyStates[DOWN_ONE])
-    player->posDown();
+  if (currentKeyStates[UP_ONE]) {
+    if (player->getY() + halfRect >= 0)
+      player->posUp();
+  }
+  if (currentKeyStates[DOWN_ONE]) {
+    if (player->getY() + PADDLEHEIGHT <= DIM_Y)
+      player->posDown();
+  }
 }
 
 void movePlayerTwo(Player *&player) {
   const Uint8 *currentKeyStates = SDL_GetKeyboardState(NULL);
-  if (currentKeyStates[UP_TWO])
-    player->posUp();
-  if (currentKeyStates[DOWN_TWO])
-    player->posDown();
+  if (currentKeyStates[UP_TWO]) {
+    if (player->getY() + halfRect >= 0)
+      player->posUp();
+  }
+  if (currentKeyStates[DOWN_TWO]) {
+    if (player->getY() + PADDLEHEIGHT <= DIM_Y)
+      player->posDown();
+  }
 }
 
 void gameRender(SDL_Renderer *&renderer, Player *playerOne, Player *playerTwo,
-                Ball *ball) {
+                Ball *ball, SDL_Rect *centerRect) {
   SDL_SetRenderDrawColor(renderer, 32, 32, 37, 255);
   SDL_RenderClear(renderer);
   SDL_SetRenderDrawColor(renderer, 225, 150, 107, 255);
   SDL_RenderFillRect(renderer, playerOne->getRect());
   SDL_RenderFillRect(renderer, playerTwo->getRect());
   SDL_RenderFillRect(renderer, ball->getRect());
+  SDL_SetRenderDrawColor(renderer, 225, 150, 107, 50);
+  SDL_RenderFillRect(renderer, centerRect);
   SDL_RenderPresent(renderer);
 }
 
@@ -64,19 +90,7 @@ void moveBall(Ball *&ball, Player *playerOne, Player *playerTwo) {
 
   ball->setPos(pos->x += vel.x, pos->y += vel.y);
 
-  // collision(ball, playerOne, playerTwo);
-  if (SDL_HasIntersection(ball->getRect(), playerOne->getRect())) {
-    // ball->setVel(-1 * vel.x, vel.y);
-  }
-
-  if (SDL_HasIntersection(ball->getRect(), playerTwo->getRect())) {
-    // ball->setVel(-1 * vel.x, vel.y);
-  }
-
-  if (pos->y < (0 + (pos->h / 2)))
-    ball->setVel(vel.x, -1 * vel.y);
-  if (pos->y > (DIM_Y - (pos->h / 2)))
-    ball->setVel(vel.x, -1 * vel.y);
+  collision(ball, playerOne, playerTwo);
 }
 
 void collision(Ball *&ball, Player *playerOne, Player *playerTwo) {
@@ -87,27 +101,24 @@ void collision(Ball *&ball, Player *playerOne, Player *playerTwo) {
     int intersect =
         (playerOne->getY() + halfRect) - (ball->getPos().y + halfBall);
     double normIntersect = intersect / halfRect;
-    double angle = normIntersect * MAXANGLE;
-    ball->setVel(vel.x * cos(angle), vel.y * -sin(angle));
-    // ball->setVel(-1 * vel.x, vel.y);
+    double angle = normIntersect * maxAngle;
+    ball->setVel(BALLVEL * cos(angle), BALLVEL * -sin(angle));
   }
 
   if (SDL_HasIntersection(ballRec, playerTwo->getRect())) {
-    double intersect = (playerOne->getY() + (playerOne->getRect()->h / 2)) -
-                       (ball->getPos().y + ball->getRect()->h / 2);
-    double normIntersect = intersect / (playerOne->getRect()->h / 2);
-    double angle = normIntersect * (5 * M_PI / 12);
-    // ball->setVel(-vel.x * cos(angle), vel.y * -sin(angle));
-    double xVel = (5 * cos(angle));
-    double yVel = 5 * -sin(angle);
-    ball->setVel(xVel, yVel);
-    SDL_Log("ball vel: %f, %f, int: %f, norm: %f, angle: %f, cos: %f, -sin: %f",
-            xVel, yVel, intersect, normIntersect, angle, cos(angle),
-            -sin(angle));
+    int intersect =
+        (playerTwo->getY() + halfRect) - (ball->getPos().y + halfBall);
+    double normIntersect = intersect / halfRect;
+    double angle = normIntersect * maxAngle;
+    ball->setVel(-BALLVEL * cos(angle), BALLVEL * -sin(angle));
   }
 
-  if (ballRec->y < (0 + (ballRec->h / 2)))
+  if (ballRec->y < (0 - (ballRec->h / 2))) {
     ball->setVel(vel.x, -1 * vel.y);
-  if (ballRec->y > (DIM_Y - (ballRec->h / 2)))
+    SDL_Log("switched 1");
+  }
+  if (ballRec->y >= (DIM_Y - (ballRec->h / 2))) {
     ball->setVel(vel.x, -1 * vel.y);
+    SDL_Log("switched 2");
+  }
 }

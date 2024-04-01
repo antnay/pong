@@ -28,8 +28,8 @@ void Player::status() { SDL_Log("%d pos: %d", playerName_, rect_.y); }
 
 Point<int> Player::rectDims() {
   Point<int> p;
-  p.x = DIM_X * .04;
-  p.y = DIM_Y * .15;
+  p.x = PADDLEWIDTH;
+  p.y = PADDLEHEIGHT;
   return p;
 }
 

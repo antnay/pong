@@ -4,7 +4,8 @@
 
 #define PLAYERSPEED 8
 #define CENTER (DIM_X / 2 - (rect_.h / 2))
-#define RECTHEIGHT (DIM_Y * .15)
+#define PADDLEWIDTH (DIM_X * .01)
+#define PADDLEHEIGHT (DIM_Y * .18)
 #define BALLHEIGHT (DIM_X * .02)
 
 class Player {
