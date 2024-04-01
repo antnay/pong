@@ -1,7 +1,4 @@
 #include "pong.hpp"
-
-#include <iostream>
-
 #include "lib.hpp"
 
 
@@ -13,9 +10,6 @@ Player::Player(int playerName) {
   rect_.h = dim.y;
   rect_.x = getXPos();
   rect_.y = (DIM_Y * .5) - (rect_.h * .5);
-  std::cout << "Player: " << playerName_ << std::endl;
-  std::cout << "dim " << rect_.w << ", " << rect_.h << std::endl;
-  std::cout << "pos " << rect_.x << ", " << rect_.y << std::endl;
 }
 void Player::posUp() { rect_.y -= PLAYERSPEED; }
 void Player::posDown() { rect_.y += PLAYERSPEED; }
@@ -35,7 +29,6 @@ Point<int> Player::rectDims() {
 
 int Player::getXPos() {
   int pos = DIM_X * .02;
-  SDL_Log("xPos: %i", pos);
   if (playerName_ == 1) {
     return pos;
   }
@@ -47,9 +40,6 @@ Ball::Ball() {
   rect_.h = rect_.w;
   rect_.x = DIM_X / 2 - (rect_.h / 2);
   rect_.y = rect_.x;
-  std::cout << "Ball" << std::endl;
-  std::cout << "pos " << rect_.x << ", " << rect_.y << std::endl;
-  std::cout << "vel " << vel_.x << ", " << vel_.y << std::endl;
 }
 
 Ball::~Ball() {}
@@ -78,8 +68,6 @@ void Ball::flipVel() {
 }
 
 void Ball::status() {
-  // SDL_Log("Ball pos: (%f, %f) vel: (%f, %f)", rect_.x, rect_.y, vel_.x,
-  // vel_.y);
   SDL_Log("vel: (%f, %f)", vel_.x, vel_.y);
 }
 

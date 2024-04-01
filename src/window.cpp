@@ -1,5 +1,6 @@
 #include "window.hpp"
 #include "lib.hpp"
+#include <SDL.h>
 
 void initSDL(SDL_Window *&window, SDL_Renderer *&renderer) {
   if (SDL_Init(SDL_INIT_VIDEO) < 0) {
@@ -19,7 +20,6 @@ void initWindow(SDL_Window *&window, int width, int height) {
     std::cout << "Could not create window " << std::endl;
     EXIT_FAILURE;
   }
-  std::cout << "Window created" << std::endl;
 }
 
 void initRender(SDL_Window *&window, SDL_Renderer *&renderer) {
@@ -29,7 +29,6 @@ void initRender(SDL_Window *&window, SDL_Renderer *&renderer) {
               << std::endl;
     EXIT_FAILURE;
   }
-  std::cout << "Renderer created" << std::endl;
 }
 
 void cleanSDL(SDL_Window *window, SDL_Renderer *renderer) {

@@ -1,21 +1,18 @@
 #ifndef _LIB_HPP_
 #define _LIB_HPP_
 #include <SDL.h>
-// #include "/opt/homebrew/opt/sdl2/include/SDL2/SDL.h"
-// #include <SDL_ttf.h>
-#include <unistd.h>
-
+#include <SDL_ttf.h>
 #include <cstddef>
 #include <cstdlib>
-#include <iostream>
+#include <unistd.h>
 #include <vector>
 
 #define SQUARE 500
 #define DIM_X SQUARE
 #define DIM_Y SQUARE
+#define SET_FPS 144
 
-template <class t>
-struct Point {
+template <class t> struct Point {
   t x;
   t y;
 };
