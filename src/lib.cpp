@@ -1,4 +1,4 @@
-#include "../headers/lib.hpp"
+#include "lib.hpp"
 
 // int circleDims() {}
 // Point<double> circlePos() {}

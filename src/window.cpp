@@ -1,5 +1,5 @@
-#include "../headers/window.hpp"
-#include "../headers/lib.hpp"
+#include "window.hpp"
+#include "lib.hpp"
 
 void initSDL(SDL_Window *&window, SDL_Renderer *&renderer) {
   if (SDL_Init(SDL_INIT_VIDEO) < 0) {
@@ -25,7 +25,7 @@ void initWindow(SDL_Window *&window, int width, int height) {
 void initRender(SDL_Window *&window, SDL_Renderer *&renderer) {
   renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
   if (renderer == NULL) {
-    std::cout << "Could not initalize renderer! SDL_ERROR: " << SDL_GetError()
+    std::cout << "Could not initialize renderer! SDL_ERROR: " << SDL_GetError()
               << std::endl;
     EXIT_FAILURE;
   }

@@ -1,7 +1,7 @@
 #ifndef _LIB_HPP_
 #define _LIB_HPP_
-// #include <SDL.h>
-#include "/opt/homebrew/opt/sdl2/include/SDL2/SDL.h"
+#include <SDL.h>
+// #include "/opt/homebrew/opt/sdl2/include/SDL2/SDL.h"
 // #include <SDL_ttf.h>
 #include <unistd.h>
 

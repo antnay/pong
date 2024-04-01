@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS = -g -Wall -std=c++20 -I/opt/homebrew/opt/sdl2/include/SDL2 -I/users/anthony/Documents/programming/c++/metal-cpp -I/opt/homebrew/opt/sdl2_ttf/include/SDL2
+CXXFLAGS = -g -Wall -std=c++20 -I/opt/homebrew/opt/sdl2/include/SDL2 -I/users/anthony/Documents/programming/c++/metal-cpp -I/opt/homebrew/opt/sdl2_ttf/include/SDL2 -I./includes
 LDFLAGS = -L/opt/homebrew/opt/sdl2/lib -lSDL2
 SRC = src/main.cpp src/window.hpp src/game.hpp src/pong.hpp src/lib.hpp
 TARGET = src/main.o src/window.o src/game.o src/pong.o src/lib.o

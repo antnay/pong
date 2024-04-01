@@ -1,7 +1,7 @@
-#include "../headers/game.hpp"
-#include "../headers/lib.hpp"
-#include "../headers/pong.hpp"
-#include "../headers/window.hpp"
+#include "game.hpp"
+#include "lib.hpp"
+#include "pong.hpp"
+#include "window.hpp"
 #include <unistd.h>
 
 int main() {
@@ -27,11 +27,12 @@ int main() {
       fps = frameCount;
       frameCount = 0;
     }
-    double dt = lastFrame / 1000;
 
     // physics and logic before render
-    moveBall(ball, playerOne, playerTwo, dt);
-    quit = getKey(e, quit, playerOne, ball);
+    moveBall(ball, playerOne, playerTwo);
+    quit = getKey(e, quit, ball);
+    movePlayerOne(playerOne);
+    movePlayerTwo(playerTwo);
 
     gameRender(renderer, playerOne, playerTwo, ball);
     // playerOne->status();

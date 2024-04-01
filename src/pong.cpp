@@ -1,6 +1,9 @@
+#include "pong.hpp"
+
 #include <iostream>
-#include "../headers/lib.hpp"
-#include "../headers/pong.hpp"
+
+#include "lib.hpp"
+
 
 Player::Player(int playerName) {
   playerName_ = playerName;
@@ -14,8 +17,8 @@ Player::Player(int playerName) {
   std::cout << "dim " << rect_.w << ", " << rect_.h << std::endl;
   std::cout << "pos " << rect_.x << ", " << rect_.y << std::endl;
 }
-void Player::posUp() { rect_.y -= 10; }
-void Player::posDown() { rect_.y += 10; }
+void Player::posUp() { rect_.y -= PLAYERSPEED; }
+void Player::posDown() { rect_.y += PLAYERSPEED; }
 void Player::incrPoint() { points_++; }
 void Player::reset() {
   rect_.y = DIM_Y / 2 - (rect_.h / 2);
@@ -51,6 +54,13 @@ Ball::Ball() {
 
 Ball::~Ball() {}
 
+Point<double> Ball::getPos() {
+  Point<double> p;
+  p.x = rect_.x;
+  p.y = rect_.y;
+  return p;
+}
+
 void Ball::setVel(double x, double y) {
   vel_.x = x;
   vel_.y = y;
@@ -74,7 +84,7 @@ void Ball::status() {
 }
 
 void Ball::reset() {
-  double p = DIM_X / 2 - (rect_.h / 2);
+  double p = CENTER;
   setPos(p, p);
-  setVel(1, 0);
+  setVel(5, 0);
 }
