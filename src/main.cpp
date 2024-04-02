@@ -5,6 +5,11 @@
 #include <SDL_log.h>
 #include <unistd.h>
 
+// TODO: refactor macros
+// TODO: mess with speeds and make it easily adjustable with macros
+// TODO: render score
+// TODO: AI
+
 int main() {
   SDL_Window *window = nullptr;
   SDL_Renderer *renderer = nullptr;
@@ -34,6 +39,7 @@ int main() {
     movePlayerOne(playerOne);
     movePlayerTwo(playerTwo);
     gameRender(renderer, playerOne, playerTwo, ball, &middleRect);
+    ball->status();
 
     lastFrame = SDL_GetTicks();
     frameTime = lastFrame - startFrame;

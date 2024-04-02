@@ -11,8 +11,8 @@ Player::Player(int playerName) {
   rect_.x = getXPos();
   rect_.y = (DIM_Y * .5) - (rect_.h * .5);
 }
-void Player::posUp() { rect_.y -= PLAYERSPEED; }
-void Player::posDown() { rect_.y += PLAYERSPEED; }
+void Player::posUp() { rect_.y -= PLAYER_VELOCITY; }
+void Player::posDown() { rect_.y += PLAYER_VELOCITY; }
 void Player::incrPoint() { points_++; }
 void Player::reset() {
   rect_.y = DIM_Y / 2 - (rect_.h / 2);
@@ -74,5 +74,5 @@ void Ball::status() {
 void Ball::reset() {
   double p = CENTER;
   setPos(p, p);
-  setVel(5, 0);
+  setVel(BALL_VELOCITY, 0);
 }

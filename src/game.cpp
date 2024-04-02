@@ -4,18 +4,6 @@
 #include <SDL_rect.h>
 #include <SDL_render.h>
 
-#define UP_ONE SDL_SCANCODE_W
-#define DOWN_ONE SDL_SCANCODE_S
-#define UP_TWO SDL_SCANCODE_I
-#define DOWN_TWO SDL_SCANCODE_K
-#define MAXANGLE (5 * M_PI / 12) // 75 degree
-#define BALL_VELOCITY 2
-
-// TODO: refactor macros
-// TODO: mess with speeds and make it easily adjustable with macros
-// TODO: render score
-// TODO: AI
-
 
 double halfRect = PADDLEHEIGHT / 2;
 double halfBall = BALLHEIGHT / 2;
@@ -120,8 +108,10 @@ void collision(Ball *&ball, Player *playerOne, Player *playerTwo) {
 
   if (ballRec->y < (0 - (ballRec->h / 2))) {
     ball->setVel(vel.x, -1 * vel.y);
+    SDL_Log("ceiling");
   }
   if (ballRec->y >= (DIM_Y - (ballRec->h / 2))) {
     ball->setVel(vel.x, -1 * vel.y);
+    SDL_Log("floor");
   }
 }

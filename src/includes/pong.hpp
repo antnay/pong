@@ -2,11 +2,6 @@
 #define _PONG_HPP_
 #include "lib.hpp"
 
-#define PLAYERSPEED 8
-#define CENTER (DIM_X / 2 - (rect_.h / 2))
-#define PADDLEWIDTH (DIM_X * .01)
-#define PADDLEHEIGHT (DIM_Y * .18)
-#define BALLHEIGHT (DIM_X * .02)
 
 class Player {
 public:

@@ -2,15 +2,23 @@
 #define _LIB_HPP_
 #include <SDL.h>
 #include <SDL_ttf.h>
-#include <cstddef>
-#include <cstdlib>
 #include <unistd.h>
-#include <vector>
 
 #define SQUARE 500
 #define DIM_X SQUARE
 #define DIM_Y SQUARE
 #define SET_FPS 144
+#define UP_ONE SDL_SCANCODE_W
+#define DOWN_ONE SDL_SCANCODE_S
+#define UP_TWO SDL_SCANCODE_I
+#define DOWN_TWO SDL_SCANCODE_K
+#define MAXANGLE (5 * M_PI / 12) // 75 degree
+#define BALL_VELOCITY 2
+#define PLAYER_VELOCITY 6
+#define PADDLEWIDTH (DIM_X * .01)
+#define PADDLEHEIGHT (DIM_Y * .18)
+#define BALLHEIGHT (DIM_X * .02)
+#define CENTER (DIM_X / 2 - (PADDLEWIDTH / 2))
 
 template <class t> struct Point {
   t x;
@@ -26,12 +34,4 @@ typedef struct Circle {
   double r;
 } circle;
 
-std::vector<SDL_Point> PixelizeCircle(SDL_Point center, int radius);
-std::vector<SDL_Vertex> triangleFanCirc(int x, int y, int radius, int segments);
-int roundUpToMultipleOfEight(int v);
-int circleDims();
-Point<double> circlePos();
-void GenerateCircle(std::vector<SDL_Vertex> &outCircleVertices,
-                    size_t vertexCount, int radius,
-                    std::vector<int> &outIndices);
 #endif

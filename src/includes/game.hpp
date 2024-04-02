@@ -1,6 +1,7 @@
 #ifndef _GAME_HPP_
 #define _GAME_HPP_
 #include "pong.hpp"
+#include <vector>
 
 bool getKey(SDL_Event &e, bool quit, Ball *&ball);
 void score (Ball *ball, Player *playerOne, Player *playerTwo);
